@@ -13,8 +13,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
       python-numpy \
       python-pip \
       python-scipy \
-      gfortran \
-      apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+      gfortran && \
+      apt-get clean && \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pip install --upgrade pip
 
