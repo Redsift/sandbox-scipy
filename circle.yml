@@ -1,6 +1,7 @@
 machine:
   environment:
-    CONTAINER_NAME: quay.io/redsift/sandbox-scipy:v2
+    CONTAINER_NAME: quay.io/redsift/sandbox-scipy
+    PYTHON_VERSIONS: 2.7 3
   pre:
     - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.9.0-circleci'
     - sudo chmod 0755 /usr/bin/docker
@@ -10,11 +11,13 @@ machine:
 dependencies:
   override:
     - docker info
-    - docker build -t $CONTAINER_NAME .
+    - docker build -t 2.7 -f Dockerfile .
+    - docker build -t 3 -f Dockerfile-3 .
 
 test:
   override:
-    - "docker run -a stdout -a stderr $CONTAINER_NAME --version"
+    - "docker run -a stdout -a stderr 2.7 --version"
+    - "docker run -a stdout -a stderr 3 --version"
 
 deployment:
   production:
@@ -23,4 +26,16 @@ deployment:
       - docker login -e $QUAY_EMAIL -u $QUAY_USER -p $QUAY_PASS quay.io
       - | 
         set -e
-        docker push $CONTAINER_NAME 
+        for PV in $PYTHON_VERSIONS
+        do
+          PYTHON_VERSION=$(docker run -t $PV --version | tr -d '\r' | tr -d '+')
+          VERSION_ARRAY=($PYTHON_VERSION)
+          VERSION=v${VERSION_ARRAY[1]}
+          MAJOR_NUMBER=(${VERSION//./ })
+          MAJOR_VERSION=$MAJOR_NUMBER
+          echo "Tagging as $CONTAINER_NAME:$VERSION"
+          docker tag $PV:latest $CONTAINER_NAME:$VERSION
+          echo "Tagging as $CONTAINER_NAME:$MAJOR_VERSION"
+          docker tag $PV:latest $CONTAINER_NAME:$MAJOR_VERSION
+          docker push $CONTAINER_NAME
+        done
