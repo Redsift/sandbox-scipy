@@ -37,5 +37,5 @@ deployment:
           docker tag $PV:latest $CONTAINER_NAME:$VERSION
           echo "Tagging as $CONTAINER_NAME:$MAJOR_VERSION"
           docker tag $PV:latest $CONTAINER_NAME:$MAJOR_VERSION
-          docker push $CONTAINER_NAME
         done
+        docker push $CONTAINER_NAME
