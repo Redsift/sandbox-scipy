@@ -16,19 +16,19 @@ dependencies:
 
 test:
   override:
-    - "docker run -a stdout -a stderr 2.7 --version"
-    - "docker run -a stdout -a stderr 3 --version"
+    - "docker run -u 7438 -a stdout -a stderr 2.7 --version"
+    - "docker run -u 7438 -a stdout -a stderr 3 --version"
 
 deployment:
   production:
     branch: master
     commands:
       - docker login -e $QUAY_EMAIL -u $QUAY_USER -p $QUAY_PASS quay.io
-      - | 
+      - |
         set -e
         for PV in $PYTHON_VERSIONS
         do
-          PYTHON_VERSION=$(docker run -t $PV --version | tr -d '\r' | tr -d '+')
+          PYTHON_VERSION=$(docker run -u 7438 -t $PV --version | tr -d '\r' | tr -d '+')
           VERSION_ARRAY=($PYTHON_VERSION)
           VERSION=v${VERSION_ARRAY[1]}
           MAJOR_NUMBER=(${VERSION//./ })
