@@ -12,7 +12,7 @@ export DEBIAN_FRONTEND=noninteractive && \
       python$tag-scipy \
       gfortran && \
       apt-get clean && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
       chown -R root:root $HOME && \
       pip$tag install --user -r /tmp/scipy/requirements.txt && \
-      chown -R sandbox:sandbox $HOME
+      chown -R sandbox:sandbox $HOME && \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
