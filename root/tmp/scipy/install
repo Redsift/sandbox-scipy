@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Libraries for Machine Learning
+export DEBIAN_FRONTEND=noninteractive && \
+      apt-get update && \
+      apt-get install -y \
+      g++ \
+      git \
+      libopenblas-dev \
+      python$tag-nose \
+      python$tag-numpy \
+      python$tag-scipy \
+      gfortran && \
+      apt-get clean && \
+      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+      pip$tag install --user -r /tmp/scipy/requirments.txt && \
+      chown -R sandbox:sandbox $HOME

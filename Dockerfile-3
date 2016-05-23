@@ -1,23 +1,6 @@
 FROM quay.io/redsift/sandbox-python:v3
 MAINTAINER Deepak Prabhakara email: deepak@redsift.io version: 1.1.101
 
-# Libraries for Machine Learning
-RUN export DEBIAN_FRONTEND=noninteractive && \
-      apt-get update && \
-      apt-get install -y \
-      g++ \
-      git \
-      libopenblas-dev \
-      python3-nose \
-      python3-numpy \
-      python3-pip \
-      python3-scipy \
-      gfortran && \
-      apt-get clean && \
-      rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY root /
 
-# TODO: write requirements file (or pip freeze)
-RUN pip3 install -v git+git://github.com/Theano/Theano.git
-RUN pip3 install keras
-RUN pip3 install pandas
-RUN pip3 install scikit-learn
+RUN /tmp/scipy/install
