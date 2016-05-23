@@ -16,8 +16,8 @@ dependencies:
 
 test:
   override:
-    - "docker run -u 7438 -a stdout -a stderr 2.7 --version"
-    - "docker run -u 7438 -a stdout -a stderr 3 --version"
+    - "docker run -u 7438:7438 -a stdout -a stderr 2.7 --version"
+    - "docker run -u 7438:7438 -a stdout -a stderr 3 --version"
 
 deployment:
   production:
@@ -28,7 +28,7 @@ deployment:
         set -e
         for PV in $PYTHON_VERSIONS
         do
-          PYTHON_VERSION=$(docker run -u 7438 -t $PV --version | tr -d '\r' | tr -d '+')
+          PYTHON_VERSION=$(docker run -u 7438:7438 -t $PV --version | tr -d '\r' | tr -d '+')
           VERSION_ARRAY=($PYTHON_VERSION)
           VERSION=v${VERSION_ARRAY[1]}
           MAJOR_NUMBER=(${VERSION//./ })
