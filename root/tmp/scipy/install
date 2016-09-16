@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Libraries for Machine Learning
+# Libraries for NL & Machine Learning
 export DEBIAN_FRONTEND=noninteractive && \
       apt-get update && \
       apt-get install -y \
@@ -14,5 +14,6 @@ export DEBIAN_FRONTEND=noninteractive && \
       apt-get clean && \
       chown -R root:root $HOME && \
       pip$tag install --user -r /tmp/scipy/requirements.txt && \
+      python$tag -m textblob.download_corpora && \
       chown -R sandbox:sandbox $HOME && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
