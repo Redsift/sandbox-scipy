@@ -15,5 +15,6 @@ export DEBIAN_FRONTEND=noninteractive && \
       chown -R root:root $HOME && \
       pip$tag install --user -r /tmp/scipy/requirements.txt && \
       python$tag -m textblob.download_corpora && \
+      python$tag -m spacy.en.download && \
       chown -R sandbox:sandbox $HOME && \
       rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
