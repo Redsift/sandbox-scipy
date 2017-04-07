@@ -4,3 +4,4 @@ pandas
 scikit-learn
 textblob
 spacy
+h5py
