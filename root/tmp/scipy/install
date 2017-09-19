@@ -3,7 +3,7 @@
 # Libraries for NL & Machine Learning
 export DEBIAN_FRONTEND=noninteractive && \
       apt-get update && \
-      apt-get install -y \
+      apt-get install -y --allow-unauthenticated \
       g++ \
       git \
       libopenblas-dev \
