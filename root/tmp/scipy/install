@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive && \
       python$tag-numpy \
       python$tag-scipy \
       gfortran && \
-      apt-get clean && \
+      apt-get purge -y && \
       chown -R root:root $HOME && \
       pip$tag install --user -r /tmp/scipy/requirements.txt && \
       python$tag -m textblob.download_corpora && \
